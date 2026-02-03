@@ -33,7 +33,7 @@ namespace DenemeAracKiralama_1
         {
             using (var db = new AppDbContext())
             {
-                // HATANIN KAYNAĞI BURASIYDI: db.Araclar yerine db.Kiralamalar yazıyor olabilir.
+               
                 // Sadece db.Araclar'ı çektiğimizden emin oluyoruz.
                 var araclar = db.Araclar.ToList();
 
@@ -71,7 +71,7 @@ namespace DenemeAracKiralama_1
                     .Include(k => k.Arac) // Aracı çekmek zorundayız çünkü Marka/Model orada
                     .Select(k => new {
                         ID = k.KiralamaID,
-                        Müşteri = k.MusteriAdSoyad, // ARTIK BURASI HATA VERMEZ!
+                        Müşteri = k.MusteriAdSoyad, 
                         Araç = k.Arac.Marka + " " + k.Arac.Model,
                         Tarih = k.AlisTarihi,
                         Gelir = k.ToplamUcret
@@ -251,6 +251,42 @@ namespace DenemeAracKiralama_1
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Onay butonu (Yanlışııkla basılma ihtimaline karşı)
+            DialogResult onay = MessageBox.Show("Bu aracı silmek istediğinize emin misiniz? Bu işlem geri alınamaz!", "Araç Silme", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+
+            if(onay == DialogResult.Yes)
+            {
+                try
+                {
+                    using(var db = new AppDbContext())
+                    {
+                        // Seçili olan aracı ID üzerinden buluyoruz
+                        int seciliId = int.Parse(dvgAdminAraclar.CurrentRow.Cells["AracID"].Value.ToString());
+                        var silinecekArac = db.Araclar.FirstOrDefault(a => a.AracID  == seciliId);
+
+                        if(silinecekArac != null)
+                        {
+                            db.Araclar.Remove(silinecekArac);
+                            db.SaveChanges();
+
+                            MessageBox.Show("Araç başarıyla silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            VerileriYukle();
+                            RaporuGuncelle();
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    // Eğer araç bir kiralama işlemine dahilse SQL hata verir, burada yakalıyoruz.
+                    MessageBox.Show("Bu araç kiralama geçmişinde kayıtlı olduğu için silinemez! Bunun yerine durumunu 'Pasif' yapabilirsiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
