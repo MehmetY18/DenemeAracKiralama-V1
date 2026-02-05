@@ -84,39 +84,7 @@ namespace DenemeAracKiralama_1
             
         }
 
-        //private void materialButton1_Click(object sender, EventArgs e)
-        //{
-        //    using (var db = new AppDbContext())
-        //    {
-        //        // Kullanıcıyı veritabanında ara
-        //        var kullanici = db.Kullanicilar.FirstOrDefault(u => u.KullaniciAdi == txtkullaniciAdi.Text && u.Sifre == txtSifre.Text);
-
-        //        if (kullanici != null)
-        //        {
-        //            Oturum.KullaniciID = kullanici.KullaniciID;
-        //            Oturum.AdSoyad = kullanici.AdSoyad;
-        //            Oturum.Rol = kullanici.Rol;
-
-        //            if (Oturum.Rol == "Admin")
-        //            {
-        //                // Admin ise AdminPanelForm'u aç
-        //                AdminPanelForm adminForm = new AdminPanelForm();
-        //                adminForm.Show();
-        //            }
-        //            else
-        //            {
-        //                // Müşteri ise Form1'i aç
-        //                Form1 musteriForm = new Form1();
-        //                musteriForm.Show();
-        //            }
-        //            this.Hide(); // Login formunu gizle
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Kullanıcı adı veya şifre hatalı!");
-        //        }
-        //    }
-        //}
+       
 
         private void txtSifre_Click(object sender, EventArgs e)
         {
@@ -162,14 +130,14 @@ namespace DenemeAracKiralama_1
                     {
                         // Admin ise AdminPanelForm'u aç
                         AdminPanelForm adminForm = new AdminPanelForm();
-                        adminForm.Show();
+                        adminForm.ShowDialog();
                         adminForm.BringToFront();
                     }
                     else
                     {
                         // Müşteri ise Form1'i aç
                         Form1 musteriForm = new Form1();
-                        musteriForm.Show();
+                        musteriForm.ShowDialog();
                         musteriForm.BringToFront();
                     }
                     this.Hide();

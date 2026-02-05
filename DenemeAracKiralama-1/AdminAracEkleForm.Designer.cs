@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminAracEkleForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.cmbAdminKategori = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.cmbKasa = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbKoltukSayisi = new System.Windows.Forms.ComboBox();
@@ -51,13 +55,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmbAdminKategori = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.cmbAdminKategori);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.cmbKasa);
@@ -82,11 +85,45 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(20, 80);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 64);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(614, 426);
+            this.panel1.Size = new System.Drawing.Size(648, 459);
             this.panel1.TabIndex = 0;
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.Location = new System.Drawing.Point(485, 312);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 40);
+            this.button1.TabIndex = 48;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // cmbAdminKategori
+            // 
+            this.cmbAdminKategori.FormattingEnabled = true;
+            this.cmbAdminKategori.Items.AddRange(new object[] {
+            "Ekonomik ",
+            "Konfor",
+            "Lüks"});
+            this.cmbAdminKategori.Location = new System.Drawing.Point(254, 188);
+            this.cmbAdminKategori.Name = "cmbAdminKategori";
+            this.cmbAdminKategori.Size = new System.Drawing.Size(95, 21);
+            this.cmbAdminKategori.TabIndex = 47;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(166, 188);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(46, 13);
+            this.label10.TabIndex = 46;
+            this.label10.Text = "Kategori";
             // 
             // cmbKasa
             // 
@@ -192,6 +229,7 @@
             this.btnResimSec.TabIndex = 37;
             this.btnResimSec.Text = "Resim Seç";
             this.btnResimSec.UseVisualStyleBackColor = true;
+            this.btnResimSec.Click += new System.EventHandler(this.button1_Click);
             // 
             // txtPlaka
             // 
@@ -262,6 +300,7 @@
             this.btnKaydet_Click.TabIndex = 29;
             this.btnKaydet_Click.Text = "Aracı Kaydet";
             this.btnKaydet_Click.UseVisualStyleBackColor = true;
+            this.btnKaydet_Click.Click += new System.EventHandler(this.btnKaydet_Click_Click);
             // 
             // comboBox1
             // 
@@ -316,28 +355,6 @@
             this.label1.TabIndex = 24;
             this.label1.Text = "Marka";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(166, 188);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(46, 13);
-            this.label10.TabIndex = 46;
-            this.label10.Text = "Kategori";
-            // 
-            // cmbAdminKategori
-            // 
-            this.cmbAdminKategori.FormattingEnabled = true;
-            this.cmbAdminKategori.Items.AddRange(new object[] {
-            "Ekonomik ",
-            "Konfor",
-            "Lüks"});
-            this.cmbAdminKategori.Location = new System.Drawing.Point(254, 188);
-            this.cmbAdminKategori.Name = "cmbAdminKategori";
-            this.cmbAdminKategori.Size = new System.Drawing.Size(95, 21);
-            this.cmbAdminKategori.TabIndex = 47;
-            // 
             // AdminAracEkleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,5 +399,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbAdminKategori;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
     }
 }

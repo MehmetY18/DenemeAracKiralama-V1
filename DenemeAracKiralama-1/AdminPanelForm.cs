@@ -194,10 +194,12 @@ namespace DenemeAracKiralama_1
         private void button1_Click(object sender, EventArgs e)
         {
             AdminAracEkleForm frm = new AdminAracEkleForm();
-            frm.Show();
-            this.Hide();
-            
-            
+            frm.ShowDialog();
+            // Ekleme formu kapandığı anda aşağıdaki satırlar çalışır:
+            VerileriYukle();
+            RaporuGuncelle();
+
+
         }
 
         private void AdminPanelForm_Resize(object sender, EventArgs e)
@@ -250,7 +252,13 @@ namespace DenemeAracKiralama_1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult secim = MessageBox.Show("Giriş ekranına dönmek istiyor musunuz?", "Çıkış", MessageBoxButtons.YesNo);
+            if (secim == DialogResult.Yes)
+            {
+                LoginForm frmLogin = new LoginForm();
+                frmLogin.Show();
+                this.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

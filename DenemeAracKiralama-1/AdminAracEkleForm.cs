@@ -26,52 +26,6 @@ namespace DenemeAracKiralama_1
             this.Height = 600;
         }
 
-        private void btnKaydet_Click_Click(object sender, EventArgs e)
-        {
-            
-            using(var db = new AppDbContext())
-    {
-                try
-                {
-                    // Yeni araç nesnesini oluşturuyoruz
-                    var yeniArac = new Arac
-                    {
-                        Marka = txtMarka.Text.Trim(),
-                        Model = txtModel.Text.Trim(),
-                        Plaka = txtPlaka.Text.Trim(),
-                        GunlukUcret = decimal.Parse(numUcret.Text), // NumericUpDown kullanımı
-                        ResimYolu = txtResimYolu.Text.Trim(),
-                        Kategori = cmbAdminKategori.SelectedItem.ToString(),
-                        Durum = 1, // Yeni araç her zaman 'Müsait' eklenir
-                        YakitTipi = cmbYakitTipi.Text,
-                        VitesTipi = cmbVitesTipi.Text,
-                        KasaTipi = cmbKasa.Text,
-                        KoltukSayisi = int.Parse(cmbKoltukSayisi.Text)
-                    };
-
-                    // Eksik alan kontrolü
-                    if (string.IsNullOrEmpty(yeniArac.Marka) || string.IsNullOrEmpty(yeniArac.Plaka))
-                    {
-                        MessageBox.Show("Lütfen en azından Marka ve Plaka bilgilerini giriniz!");
-                        return;
-                    }
-
-                    db.Araclar.Add(yeniArac);
-                    db.SaveChanges();
-
-                    MessageBox.Show($"{yeniArac.Marka} {yeniArac.Model} başarıyla envantere eklendi.", "Başarılı");
-
-                    // İşlem bittikten sonra formu kapat ve ana listeyi yenilemek için bilgi ver
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Kaydedilirken bir hata oluştu: " + ex.Message);
-                }
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -87,6 +41,7 @@ namespace DenemeAracKiralama_1
 
         private void AdminAracEkleForm_Load(object sender, EventArgs e)
         {
+            
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
             panel1.Top = (this.ClientSize.Width - panel1.Width) / 2;
         }
@@ -100,6 +55,45 @@ namespace DenemeAracKiralama_1
         {
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
             panel1.Top = (this.ClientSize.Width - panel1.Width) / 2;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnKaydet_Click_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new AppDbContext())
+                {
+                    // 1. Yeni bir araç nesnesi oluşturuyoruz
+                    var yeniArac = new Arac
+                    {
+                        Marka = txtMarka.Text,
+                        Model = txtModel.Text,
+                        Plaka = txtPlaka.Text,
+                        GunlukUcret = decimal.Parse(numUcret.Text),
+                        Durum = 1, // Yeni eklenen araç varsayılan olarak "Müsait" (1) olsun
+                        ResimYolu = txtResimYolu.Text // Seçtiğin resmin dosya yolu
+                    };
+
+                    // 2. Veritabanına ekleme komutu
+                    db.Araclar.Add(yeniArac);
+
+                    // 3. Değişiklikleri SQL'e kaydet
+                    db.SaveChanges();
+
+                    MessageBox.Show("Araç başarıyla sisteme eklendi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -234,7 +234,13 @@ namespace DenemeAracKiralama_1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DialogResult secim = MessageBox.Show("Giriş ekranına dönmek istiyor musunuz?", "Çıkış", MessageBoxButtons.YesNo);
+            if(secim== DialogResult.Yes)
+            {
+                LoginForm frmLogin = new LoginForm();
+                frmLogin.Show();
+                this.Close();
+            }
         }
 
         private void txtArama_TextChanged(object sender, EventArgs e)
