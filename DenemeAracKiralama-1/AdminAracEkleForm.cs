@@ -26,6 +26,20 @@ namespace DenemeAracKiralama_1
             this.Height = 600;
         }
 
+        public void Temizle()
+        {
+            txtMarka.Clear();
+            txtModel.Clear();
+            txtPlaka.Clear();
+            numUcret.Clear();
+            txtResimYolu.Clear();
+            comboBox1.SelectedIndex = -1;
+            txtResimYolu.Clear();
+
+            // İmleci otomatik olarak ilk kutucuğa gönder:
+            txtMarka.Focus();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -41,20 +55,20 @@ namespace DenemeAracKiralama_1
 
         private void AdminAracEkleForm_Load(object sender, EventArgs e)
         {
-            
+
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
-            panel1.Top = (this.ClientSize.Width - panel1.Width) / 2;
+            panel1.Top = (this.ClientSize.Width - panel1.Height) / 2;
         }
 
         private void panel1_Resize(object sender, EventArgs e)
         {
-            
+
         }
 
         private void AdminAracEkleForm_Resize(object sender, EventArgs e)
         {
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
-            panel1.Top = (this.ClientSize.Width - panel1.Width) / 2;
+            panel1.Top = (this.ClientSize.Width - panel1.Height) / 2;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -64,35 +78,46 @@ namespace DenemeAracKiralama_1
 
         private void btnKaydet_Click_Click(object sender, EventArgs e)
         {
-            try
+            using (var db = new AppDbContext())
             {
-                using (var db = new AppDbContext())
+                try
                 {
-                    // 1. Yeni bir araç nesnesi oluşturuyoruz
+                    // Yeni araç nesnesini oluşturuyoruz
                     var yeniArac = new Arac
                     {
-                        Marka = txtMarka.Text,
-                        Model = txtModel.Text,
-                        Plaka = txtPlaka.Text,
-                        GunlukUcret = decimal.Parse(numUcret.Text),
-                        Durum = 1, // Yeni eklenen araç varsayılan olarak "Müsait" (1) olsun
-                        ResimYolu = txtResimYolu.Text // Seçtiğin resmin dosya yolu
+                        Marka = txtMarka.Text.Trim(),
+                        Model = txtModel.Text.Trim(),
+                        Plaka = txtPlaka.Text.Trim(),
+                        GunlukUcret = decimal.Parse(numUcret.Text), // NumericUpDown kullanımı
+                        ResimYolu = txtResimYolu.Text.Trim(),
+                        Kategori = cmbAdminKategori.SelectedItem.ToString(),
+                        Durum = 1, // Yeni araç her zaman 'Müsait' eklenir
+                        YakitTipi = cmbYakitTipi.Text,
+                        VitesTipi = cmbVitesTipi.Text,
+                        KasaTipi = cmbKasa.Text,
+                        KoltukSayisi = int.Parse(cmbKoltukSayisi.Text)
                     };
 
-                    // 2. Veritabanına ekleme komutu
-                    db.Araclar.Add(yeniArac);
+                    // Eksik alan kontrolü
+                    if (string.IsNullOrEmpty(yeniArac.Marka) || string.IsNullOrEmpty(yeniArac.Plaka))
+                    {
+                        MessageBox.Show("Lütfen en azından Marka ve Plaka bilgilerini giriniz!");
+                        return;
+                    }
 
-                    // 3. Değişiklikleri SQL'e kaydet
+                    db.Araclar.Add(yeniArac);
                     db.SaveChanges();
 
-                    MessageBox.Show("Araç başarıyla sisteme eklendi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"{yeniArac.Marka} {yeniArac.Model} başarıyla envantere eklendi.", "Başarılı");
 
-                 
+                    // İşlem bittikten sonra formu kapat ve ana listeyi yenilemek için bilgi ver
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Kaydedilirken bir hata oluştu: " + ex.Message);
+                }
             }
         }
     }

@@ -185,9 +185,7 @@ namespace DenemeAracKiralama_1
 
         private void dvgAdminAraclar_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            // Hata penceresinin çıkmasını engellemek için burayı boş bırakıyoruz.
-            // DataGridView bir hata yakaladığında hiçbir şey yapmayacak.
-            //e.ThrowException = false;
+           
             e.Cancel = true; // Hata mesajını tamamen engeller ve işlemin devam etmesini sağlar
         }
 

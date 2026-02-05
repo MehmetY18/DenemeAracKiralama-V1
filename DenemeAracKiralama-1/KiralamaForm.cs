@@ -75,6 +75,7 @@ namespace DenemeAracKiralama_1
 
         private void KiralamaForm_Load(object sender, EventArgs e)
         {
+            BilgileriDoldur();
             using (var db = new AppDbContext())
             {
                 // 1. Bu aracın yapılmış olan en son kiralamasını bulalım (Teslim tarihine bakarak)
@@ -105,7 +106,7 @@ namespace DenemeAracKiralama_1
 
             
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
-            panel1.Top = (this.ClientSize.Width - panel1.Height) / 2;
+            panel1.Top = (this.ClientSize.Height - panel1.Height) / 2;
             
         }
 
