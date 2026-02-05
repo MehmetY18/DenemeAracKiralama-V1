@@ -28,7 +28,7 @@ Giriş Ekranı
 
 <img width="778" height="446" alt="image" src="https://github.com/user-attachments/assets/315cf286-10b9-4c83-a0a2-40bad6fcfee9" />
 
-<img width="1055" height="495" alt="image" src="https://github.com/user-attachments/assets/ba4c27ae-1f90-4cce-9a5c-efdfc2f323c7" />
+
 
 
 
